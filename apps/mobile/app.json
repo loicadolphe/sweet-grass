@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Sweet Grass",
+    "slug": "sweet-grass",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Sweet Grass uses your camera to identify plants."
+      }
+    },
+    "android": {
+      "permissions": ["CAMERA"]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Sweet Grass uses your camera to identify plants."
+        }
+      ]
+    ]
+  }
+}
