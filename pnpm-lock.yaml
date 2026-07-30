@@ -41,6 +41,12 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@expo-google-fonts/karla':
+        specifier: ^0.4.2
+        version: 0.4.2
+      '@expo-google-fonts/sora':
+        specifier: ^0.4.2
+        version: 0.4.2
       '@react-navigation/native':
         specifier: ^7.3.14
         version: 7.3.14(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -50,6 +56,9 @@ importers:
       expo:
         specifier: ~54.0.32
         version: 54.0.36(@babel/core@7.29.7)(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
+      expo-font:
+        specifier: ~14.0.12
+        version: 14.0.12(expo@54.0.36(@babel/core@7.29.7)(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3))(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       expo-image-picker:
         specifier: ~17.0.10
         version: 17.0.11(expo@54.0.36(@babel/core@7.29.7)(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3))
@@ -866,6 +875,12 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@expo-google-fonts/karla@0.4.2':
+    resolution: {integrity: sha512-a99ezH+aon+ya8XR4tJX+npPP5nis6DhIIbvqhYDQgoVVWp0jebKrBFOXFzzBonkxE8YAltrTS9DdXHW4n3LAw==}
+
+  '@expo-google-fonts/sora@0.4.2':
+    resolution: {integrity: sha512-X86Kl1cfObcSUzTLIbtmrPCLRlIbCNh0uBOo8bjmXb8gWgVVhnI8CZJEK2btsdq85JPn5k4P6sbV9JLbAm7dqQ==}
 
   '@expo/cli@54.0.26':
     resolution: {integrity: sha512-BjsAoKINLEo3LRE+sDC6FCgjxuOWsyfOFOKz0txrbEcxSatzIjJDVuX8XaTdmeicZdcoN524yl1sfwCWfxhYMw==}
@@ -4159,6 +4174,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.19.12':
     optional: true
+
+  '@expo-google-fonts/karla@0.4.2': {}
+
+  '@expo-google-fonts/sora@0.4.2': {}
 
   '@expo/cli@54.0.26(expo@54.0.36(@babel/core@7.29.7)(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3))(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(typescript@5.9.3)':
     dependencies:

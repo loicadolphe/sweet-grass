@@ -32,12 +32,24 @@ export interface Plant {
   feedFrequencyDays: number | null
   lastFedAt: string | null
   addedAt: string
+  dueForFeeding?: boolean
 }
 
 export interface PlantNetCandidate {
   scientificName: string
   commonNames: string[]
   score: number
+}
+
+export type ReadingAction = "none" | "water" | "soak" | "shower" | "feed"
+
+export interface Reading {
+  id: number
+  plantId: number
+  moistureValue: number
+  recommendedAction: ReadingAction
+  actionTaken: ReadingAction | null
+  takenAt: string
 }
 
 export const api = {
@@ -61,7 +73,7 @@ export const api = {
   logReading: (
     plantId: number,
     moistureValue: number
-  ): Promise<{ reading: unknown; reason: string }> =>
+  ): Promise<{ reading: Reading; reason: string }> =>
     request(`/api/plants/${plantId}/readings`, {
       method: "POST",
       body: JSON.stringify({ moistureValue }),

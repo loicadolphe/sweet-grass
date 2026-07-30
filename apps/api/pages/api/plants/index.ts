@@ -3,13 +3,16 @@ import { requireApiKey } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { plants } from "../../../drizzle/schema"
 import { desc } from "drizzle-orm"
+import { isDueForFeeding } from "@/lib/wateringLogic"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!requireApiKey(req, res)) return
 
   if (req.method === "GET") {
     const all = await db.select().from(plants).orderBy(desc(plants.addedAt))
-    res.status(200).json({ plants: all })
+    res.status(200).json({
+      plants: all.map((plant) => ({ ...plant, dueForFeeding: isDueForFeeding(plant) })),
+    })
     return
   }
 
