@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import { api, Plant, ReadingAction } from "@/lib/api"
+import { notify } from "@/lib/alert"
 import { fonts, resultTheme, useTheme } from "@/theme"
 import { Screen } from "@/components/Screen"
 import { ScreenHeader } from "@/components/ScreenHeader"
@@ -33,7 +34,7 @@ export function LogReadingScreen({ route, navigation }: any) {
       const { reading, reason } = await api.logReading(plantId, moisture)
       setResult({ action: reading.recommendedAction, reason })
     } catch (err) {
-      Alert.alert("Couldn't log reading", (err as Error).message)
+      notify("Couldn't log reading", (err as Error).message)
     } finally {
       setSubmitting(false)
     }
