@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import {
-  Alert,
   Animated,
   Easing,
   Image,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -13,6 +13,7 @@ import {
 } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 import { api, PlantNetCandidate } from "@/lib/api"
+import { notify } from "@/lib/alert"
 import { fonts, spacing, useTheme } from "@/theme"
 import { Screen } from "@/components/Screen"
 import { ScreenHeader } from "@/components/ScreenHeader"
@@ -34,10 +35,14 @@ export function AddPlantScreen({ navigation }: any) {
   const [saving, setSaving] = useState(false)
 
   async function takePhoto() {
-    const permission = await ImagePicker.requestCameraPermissionsAsync()
-    if (!permission.granted) {
-      Alert.alert("Camera permission needed to identify plants.")
-      return
+    // On web there is nothing to grant up front: launchCameraAsync renders a
+    // file input and the browser prompts for the camera itself when tapped.
+    if (Platform.OS !== "web") {
+      const permission = await ImagePicker.requestCameraPermissionsAsync()
+      if (!permission.granted) {
+        notify("Camera permission needed to identify plants.")
+        return
+      }
     }
 
     const result = await ImagePicker.launchCameraAsync({ base64: true, quality: 0.7 })
@@ -53,7 +58,7 @@ export function AddPlantScreen({ navigation }: any) {
     try {
       const { candidates } = await api.identify(base64)
       if (candidates.length === 0) {
-        Alert.alert("No matches found", "Try another photo with the whole plant in frame.")
+        notify("No matches found", "Try another photo with the whole plant in frame.")
         setStep("capture")
         return
       }
@@ -61,14 +66,14 @@ export function AddPlantScreen({ navigation }: any) {
       setSelectedIndex(0)
       setStep("picker")
     } catch (err) {
-      Alert.alert("Identification failed", (err as Error).message)
+      notify("Identification failed", (err as Error).message)
       setStep("capture")
     }
   }
 
   async function submitDetails() {
     if (!nickname.trim()) {
-      Alert.alert("Give your plant a nickname first.")
+      notify("Give your plant a nickname first.")
       return
     }
 
@@ -93,7 +98,7 @@ export function AddPlantScreen({ navigation }: any) {
       })
       navigation.replace("PlantDetail", { plantId: plant.id })
     } catch (err) {
-      Alert.alert("Couldn't save plant", (err as Error).message)
+      notify("Couldn't save plant", (err as Error).message)
     } finally {
       setSaving(false)
     }
