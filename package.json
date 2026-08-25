@@ -4,6 +4,7 @@
   "packageManager": "pnpm@9.0.0",
   "scripts": {
     "api:dev": "pnpm --filter sweet-grass-api dev",
-    "mobile:start": "pnpm --filter sweet-grass-mobile start"
+    "mobile:start": "pnpm --filter sweet-grass-mobile start",
+    "web:dev": "pnpm --filter sweet-grass-web dev"
   }
 }
