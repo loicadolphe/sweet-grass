@@ -14,6 +14,7 @@ import {
 import * as ImagePicker from "expo-image-picker"
 import { api, PlantNetCandidate } from "@/lib/api"
 import { notify } from "@/lib/alert"
+import { preparePhotoForIdentify } from "@/lib/preparePhoto"
 import { fonts, spacing, useTheme } from "@/theme"
 import { Screen } from "@/components/Screen"
 import { ScreenHeader } from "@/components/ScreenHeader"
@@ -45,17 +46,22 @@ export function AddPlantScreen({ navigation }: any) {
       }
     }
 
-    const result = await ImagePicker.launchCameraAsync({ base64: true, quality: 0.7 })
+    const result = await ImagePicker.launchCameraAsync({ quality: 0.7 })
     if (result.canceled || !result.assets[0]) return
 
     const asset = result.assets[0]
-    const base64 = asset.base64
-    if (!base64) return
 
     setPhotoUri(asset.uri)
     setStep("identifying")
 
     try {
+      const base64 = await preparePhotoForIdentify(asset.uri)
+      if (!base64) {
+        notify("Couldn't read that photo", "Try taking it again.")
+        setStep("capture")
+        return
+      }
+
       const { candidates } = await api.identify(base64)
       if (candidates.length === 0) {
         notify("No matches found", "Try another photo with the whole plant in frame.")
